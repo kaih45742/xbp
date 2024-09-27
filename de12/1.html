@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <!-- ⑥↓タイトルを変えてみよう -->
+    <title>かいのテストページ9/24</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <h1>第一回</h1>
+<div>
+<h2>gitについて</h2>
+<font color=#FF0000>gitとは</font>webサイトを制作する上でソースコードや変更履歴を管理するために使われる<font color=#FF0000>管理システム</font>のこと。</div><br>        
+<ul>
+○gitでは以下のような利点がある<br><br>
+<li>gitが各ファイルの変更履歴を<font color=#0000FF>一括で管理してくれる</font></li>
+<li>間違えても古いバージョンに<font color=#0000FF>簡単に巻き戻せる</font></li>
+<li>編集履歴やファイルを複数人で<font color=#0000FF>共有しながら並行作業できる</font></li>
+<li>複数人で修正した箇所を<font color=#0000FF>1つにまとめてくれる</font></li>
+</ul>
+</div>
+
+
+<div>
+<br>gitの基本的な構造<br>
+gitでは<font color=#008000>レポジトリ</font>(過去の状態が記録されていく貯蔵庫)を用いてデータを管理、共有する。<br>
+レポジトリには、個人が編集できる<font color=#008000>「ローカルレポジトリ」</font>と、サーバー上に設置して複数人で共有するための<font color=#008000>「リモートレポジトリ」</font>の2種類がある。<br>
+<img src="./images/WIN_20240927_16_00_47_Pro.jpg" width="40%"><br>
+例：Aさんがローカルレポジトリを介してリモートレポジトリに変更履歴やファイルを<font color=#008000>コミット(記録)</font>することで、BさんやCさんはリモートレポジトリからAさんのファイルや変更履歴を自分のローカルレポジトリから<font color=#008000>クローン(ダウンロード)</font>して利用することができる。<br><br><br>
+
+また、gitでは<font color=#008000>「ブランチ」</font>という機能を用いてファイルの編集履歴を分岐させ記録できる<br>
+<img src="./images/WIN_20240927_16_08_22_Pro.jpg" width="40%"><br>
+<font color=#008000>「マスターブランチ」</font>というメインのブランチと、そこから分岐して修正や機能の追加をするブランチに分かれることで、データが混同することがなく、ミスを防止できる。<br>
+また、バグの修正や、機能の追加を行ったブランチをマスターブランチに統合することを<font color=#008000>「マージ」</font>と言う。
+</div><br><br>
+
+<div>
+<h2>HTMLについて</h2>
+<font color=#FF0000>HTML(Hyper Text Markup Language)は</font>Webページを制作するときに、Webページ内の</font>Webページを制作するためのテキスト情報の構成（タイトル・段落など）や役割を<font color=#FF0000>コンピュータが構造的に理解できるようにするための言語</font>。<br>
+HTMLは<font color=#00FF00>タグ</font>・<font color=#00FFFF>要素</font>・<font color=#FF00FF>属性</font>の3つから構成されている<br>
+<font color=#00FF00>タグ</font>：＜br＞や＜img＞など、開始タグと終了タグで囲みコンピューターにテキスト情報を理解させるためのもの。<br>
+<font color=#00FFFF>要素</font>：＜head＞や＜body＞など、Webページを構成するテキスト情報のかたまりを指すもの。<br>
+<font color=#FF00FF>属性</font>：<a href="https://www.kanagawa-u.ac.jp" target="blank">＜a href="URL"＞</a>や<font color=#FF0000>＜font</font> <font color=#0000FF>color</font><font color=#008000>="色"＞</font>など、個々のタグに特定の意味を与えるもの。<br><br>
+HTMLでは、実際の言語と同じように決められた文法を使い正しく記述することで、コンピューターにテキストの意味を正確に理解させることができる。
+
+</div>
+
+<div>
+<h2>参考文献</h2>
+<div>
+<div>
+<a href="https://tcd-theme.com/2019/12/what-is-git.html" target="_blank">【初心者向け】Gitとは何なのか。基本用語やその仕組みをまとめています。</a><br>
+<a href="https://backlog.com/ja/git-tutorial/stepup/01/" target="_blank">ブランチとは|サル先生のGit入門</a><br>
+<a href="https://schoo.jp/matome/article/1635" target="blank">HTMLとは？初心者向けに基礎知識を分かりやすく解説</a><br>
+<a href="http://www.netyasun.com/home/color.html" target="blank">HTML CSS カラーコード一覧表</a>
+</div>
+
+
+</body>
+</html>
