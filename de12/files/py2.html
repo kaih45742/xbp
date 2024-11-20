@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>課題2024/11/12.html</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./images/xbp.ico">
+</head>
+<body>
+    <logotohome>
+    <a href="../index.html"><img src="./images/0_XBlogo.png" alt=""></a>
+    </logotohome>
+
+    
+<h1>python課題2024/11/12</h1><br>
+
+<h2>作成したapi</h2>
+今回、グループの話し合いで、「ショッピングサイトの新しい商品やセールが登場した時や、webclassの課題が出された時に通知してくれるものが欲しい」ということになったので、
+webページが更新されたときにスマホに通知してくれるapiをchatGPTを参考にしながら作成しました。<br><br><br>
+また、初めは通知する方法にGmailを採用しようとしたのですが、なぜかUnicode errerが起きてしまうので(UTF-8を使っているのに、asciiのエラーが出る(？？？))<br>
+今回はSlack apiを取り入れました。
+
+<h3><a href="./py2code.html" target="blank">ソースコード(errer中)</a></h3>
+<h3><a href="./py2.py" target>ソースコード(ファイルダウンロード)</a></h3>
+<h3><a href="https://youtu.be/xGo95ai9Ng8" target="blank">実際に動かしている動画</a><br><br>
+
+
+<h2>詳細</h2>
+<h3>①</h3>
+<img src="./images/py1.png" width="60%"><br>
+この部分では、importやurlにアクセスといった初期設定をしています。8行目にチェックしたいurlを入力します。<br><br><br><br><br><br>
+<h3>②</h3>
+<img src="./images/py2.png" width="60%"><br>
+この部分でページの初期内容を記録し、変更があったらslackに通知するようになっています。51~53行目はユーザーによって異なります。<br><br><br><br><br><br>
+<h3>③</h3>
+<img src="./images/py3.png" width="60%"><br>
+この部分で5秒おきに実行するループを組んでいます。63行目の部分を変更することで実行する間隔を変更できます。<br><br><br><br><br><br>
+
+<h2>さいごに</h2>
+7~10行目の部分を変更することでログインが必要なページであったり、ページ内の特定部分だけ変更をチェックする、といった場合にも対応できるようですが、今回は難しかったです。<br><br><br>
+
+
+<h2>参考サイト</h2>
+<a href="https://chatgpt.com/?model=auto" target="blank">Slack api</a><br>
+<a href="https://help.receptionist.jp/?p=1111#gsc.tab=0" target="blank">Slackの通知がスマホに届かないときの対処法</a>
+<a href="https://qiita.com/Himeka_Kawaguchi/items/66cce374a88c243c439d" target="balnk">【これを読めば誰でも出来るSlackアプリの作り方】SlackAPIを使うための準備</a><br>
+<a href="https://eset-info.canon-its.jp/malware_info/special/detail/211013.html" target="blank">ハッシュ化と暗号化の違いとは？</a><br>
+<a href="https://chatgpt.com/" target="blank">chat君</a>
+
+
+
+
+
+            
+</body>
+</html>
