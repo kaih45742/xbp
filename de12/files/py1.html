@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>XBP_HPsample</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./images/xbp.ico">
+</head>
+<body>
+    <logotohome>
+    <a href="../index.html"><img src="./images/0_XBlogo.png" alt=""></a>
+    </logotohome>
+<h2>Python課題</h2>
+<h3>1.作ったもの</h3>
+とりあえずすぐアイディアが思いついたので、タイピング(?)的なものを作りました。
+
+<h3>2.制作過程</h3>
+①.まず、
+<pre><code>
+    a = random.randint(0,35)
+    if a<10:
+      b = str(a)
+      
+    else:
+        b = random.choice(string.ascii_lowercase)
+</code></pre>
+で数字とアルファベットの各文字が出る確率を均一にして、生成しました。<br><br>
+
+②.次に
+<pre><code>
+    word_list=[]
+    word_list.append(b)
+</code></pre>
+で生成した文字を記録し、<br><br>
+
+③.
+<pre><code>
+    for i in range (0,5):
+</code></pre>
+を①の上に加えることでランダムな5文字を生成できました。<br><br>
+
+④.そして、
+<pre><code>
+c = (word_list[0]+ "" +word_list[1]+ "" +word_list[2]+ "" +word_list[3]+ "" +word_list[4])
+    #ここで+ "" +を間に置かないと文字の間に""が出力されて見づらくなってしまう
+    d = (c+ " " +"→ ")
+    #これを挟まないとinputする時に見づらい
+    if e == c:
+       print("成功")
+       success_list.append(int(1))
+       #成功した回数のカウント
+    else:
+       print("失敗")
+</code></pre>
+これで生成した文字列をタイピングさせて、成功判定を出すことができました。<br><br>
+
+⑤.④でタイピングゲームの基礎ができたので
+<pre><code>
+    start = time.time()
+    for i in range (0,5):
+</code></pre>
+5回繰り返し、それにかかった時間を計測します。<br><br>
+
+⑥仕上げに
+<pre><code>
+    end = time.time()
+    f=sum(success_list)
+    g = end - start
+    print(f,"/ 5")
+    print(g,"秒")
+</code></pre>これで、5回中の成功回数とタイムを表示することができました。<br><br>
+
+<h3>おまけ</h3>作った後になんとなく味気無さを感じたので、20秒以内に5回成功することでボーナスメッセージを表示することにしました。
+<pre><code>
+    if f ==5 and g<=20:
+   print("すげえ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+   #s = '　　　　　　　　　　　　　■■■■■\n　　　　　　　   　　■■■　　　　　■■■\n　　　　　　　　■■　　　　　　　　　　　■■\n　　　　　　■■　　　　　　　　　　　　　　　■■\n　　　　　■　　　　　　　　　　　　　　　　　　■■\n　　　　■　　　　　　　　　　　　　　　　　　　　　■\n　　　■■　　　　　　　　　　　　　　　　　　　　　■■\n　　　■　　　　　　　　　　　　　　　　　　　　　　　■\n　　■　　　　　　　　　　　　　　　　　　　　　　　　　■\n　　　　　　　　　　　　　　　　　　　　　　　　　　　　■\n　　　■■■■■■■■■　　　　　　　■■■■■■■■■\n　■■■■　　　　　■■■■　　　■■■■　　　　　■■■■\n■■■　　　　　　　　　　■■■■■　　　　　　　　　■■■\n\n　　■■■■■■■■■■■■　　　■■■■■■■■■■■■\n■　■■■■■■■■■■■■　　　■■■■■■■■■■■■\n■　　■■■■■■■■■■　　　　　■■■■■■■■■■　■\n■■　■■■■　■■■■　　　　　　■■■■　　■■■　　■\n　■　　　■■■■■■　　　　　　　　　■■■■■■　　　■\n　■　　　　　　　　　　　　　　　　　　　　　　　　　　　■\n　■■　　　　　　　　　　　　　　　　　　　　　　　　　■■\n　　■　　　　　　■■　　　　　　　　　■■　　　　　■■\n　　■■　　　　　　■■■　　　　　■■■　　　　　　■■\n　　　■■　　　　　　■■■■■■■■■　　　　　　■■\n　　　　■■　　　　　　　　　　　　　　　　　　　■■\n　　　　■■■　　　　　　　　　　　　　　　　　■■■\n　　　　　■■■　　　　　　　　　　　　　　■■■\n　　　　　　　■■■■　■　　　■　■　■■■■\n　　　　　　　　■■■■　■　■　　■■■■■\n 　　　　　　　　　　■■■■■■■■■'
+   #print(s)
+   #↑一応ここは顔文字を生成しようとしたけど、記号の大きさの関係でずれたので諦めました
+</code></pre>
+
+<h3>ソースコード</h3>
+<a href="./code20241111.html" target="blank">こちら(作業で誤ってデータが消えました)</a>
+<br>
+<br>
+
+
+</body>
+</html>
