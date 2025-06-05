@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>XBP_HPsample</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./images/xbp.ico">
+</head>
+<body>
+    <logotohome>
+    <a href="../index.html"><img src="../images/0_XBlogo.png" alt=""></a>
+    </logotohome><br>
+
+arduinoのコードはメールにある<br><br><br>
+
+<h2>一回だけ鳴るやつ</h2>
+<pre><code>
+import serial
+import pygame
+import time
+
+# pygame初期化
+pygame.mixer.init()
+
+# 音声ファイル（絶対パスにする）
+pygame.mixer.music.load("C:/Users/kai23/mygit/xbp/project1/tengokutojigoku.mp3")  # パスは自分のものに書き換えてください
+
+# Arduinoと接続するCOMポート（適宜変更）
+ser = serial.Serial("COM5", 9600, timeout=1)  # COM番号は環境により異なる
+
+# 状態管理（何度も再生しないように）
+playing = False
+
+print("Arduinoからの値を監視しています...")
+
+while True:
+    try:
+        line = ser.readline().decode("utf-8").strip()
+        if line.isdigit():
+            light_value = int(line)
+            print("センサー値:", light_value)
+
+            if light_value >= 400 and not playing:
+                print("▶ 明るさが200以上！音を再生します。")
+                pygame.mixer.music.play()
+                playing = True
+
+            # 再生が終わったら playing をリセット
+            if not pygame.mixer.music.get_busy() and playing:
+                playing = False
+
+        time.sleep(0.1)
+
+    except Exception as e:
+        print("エラー:", e)
+</code></pre>
+
+<h2>ループするやつ</h2>
+ <pre><code>
+import serial
+import pygame
+import time
+
+pygame.mixer.init()
+pygame.mixer.music.load("C:/Users/kai23/mygit/xbp/project1/tengokutojigoku.mp3")
+
+#HC-06が割り当てられているCOMポートに変更
+ser = serial.Serial("COM5", 9600, timeout=1)
+playing = False
+print("Arduinoからの値を監視しています...")
+
+while True:
+    try:
+        line = ser.readline().decode("utf-8").strip()
+        if line.isdigit():
+            light_value = int(line)
+            print("センサー値:", light_value)
+
+            if light_value >= 400:
+                if not playing:
+                    print("▶ 明るさが200以上。ループ再生開始")
+                    pygame.mixer.music.play(-1)
+                    playing = True
+            else:
+                if playing:
+                    print("▶ 明るさが200未満。再生停止")
+                    pygame.mixer.music.stop()
+                    playing = False
+
+        time.sleep(0.1)
+
+    except Exception as e:
+        print("エラー:", e)
+
+</code></pre>
+
+ 
+
+<br>
+<br>
+
+
+</body>
+</html>
