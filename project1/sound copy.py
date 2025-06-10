@@ -6,7 +6,7 @@ pygame.mixer.init()
 pygame.mixer.music.load("C:/Users/kai23/mygit/xbp/project1/tengokutojigoku.mp3")
 
 #HC-06が割り当てられているCOMポートに変更
-ser = serial.Serial("COM5", 9600, timeout=1)
+ser = serial.Serial("COM7", 9600, timeout=1)
 playing = False
 print("Arduinoからの値を監視しています...")
 
@@ -17,7 +17,7 @@ while True:
             light_value = int(line)
             print("センサー値:", light_value)
 
-            if light_value >= 400:
+            if light_value >= 200:
                 if not playing:
                     print("▶ 明るさが200以上。ループ再生開始")
                     pygame.mixer.music.play(-1)

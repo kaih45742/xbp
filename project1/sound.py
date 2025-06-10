@@ -9,7 +9,7 @@ pygame.mixer.init()
 pygame.mixer.music.load("C:/Users/kai23/mygit/xbp/project1/tengokutojigoku.mp3")  # パスは自分のものに書き換えてください
 
 # Arduinoと接続するCOMポート（適宜変更）
-ser = serial.Serial("COM5", 9600, timeout=1)  # COM番号は環境により異なる
+ser = serial.Serial("COM7", 9600, timeout=1)  # COM番号は環境により異なる
 
 # 状態管理（何度も再生しないように）
 playing = False
@@ -23,8 +23,8 @@ while True:
             light_value = int(line)
             print("センサー値:", light_value)
 
-            if light_value >= 400 and not playing:
-                print("▶ 明るさが200以上！音を再生します。")
+            if light_value >= 250 and not playing:
+                print("▶ 明るさが250以上！音を再生します。")
                 pygame.mixer.music.play()
                 playing = True
 
