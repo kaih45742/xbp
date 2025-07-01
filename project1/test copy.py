@@ -1,8 +1,16 @@
 import serial
 import time
+import pygame  # pygameで音声を再生
+
+# --- MP3ファイルの絶対パスを指定 ---
+mp3_path = "C:/Users/kai23/mygit/xbp/project1/ahiru2.mp3"  # ←ご自身のMP3ファイルのパスに変更
+
+# pygameの初期化
+pygame.mixer.init()
+pygame.mixer.music.load(mp3_path)
 
 # シリアルポートとボーレートを指定
-port = "COM7"  # ← 実際のArduinoのポートに合わせて変更
+port = "COM7"
 baudrate = 9600
 
 try:
@@ -15,19 +23,20 @@ try:
         if line:
             print("Received:", line)
 
-            # 例: Strengthの値だけ取り出したい場合
             if "Strength:" in line:
                 try:
                     strength_str = line.split("Strength:")[-1].strip()
                     strength = float(strength_str)
                     print("磁力の強さ:", strength)
-                    
-                    # 強さがしきい値を超えたら音を鳴らす（オプション）
+
+                    # しきい値判定でMP3再生
                     if strength < 20000 or strength > 70000:
-                        print("🔔 強い磁力を検知！音を鳴らします")
-                        # Windows の場合：beep音
-                        import winsound
-                        winsound.Beep(1000, 500)  # 周波数, 時間(ms)
+                        print("🔔 異常な磁力を検知！音を再生します")
+                        pygame.mixer.music.play()
+
+                        # 音が鳴り終わるまで待機（必要なら）
+                        while pygame.mixer.music.get_busy():
+                            time.sleep(0.1)
 
                 except ValueError:
                     pass
