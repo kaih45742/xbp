@@ -2,7 +2,7 @@ import serial
 import time
 
 # シリアルポートとボーレートを指定
-port = "COM7"  # ← 実際のArduinoのポートに合わせて変更
+port = "COM5"  # ← 実際のArduinoのポートに合わせて変更
 baudrate = 9600
 
 try:
@@ -21,9 +21,9 @@ try:
                     strength_str = line.split("Strength:")[-1].strip()
                     strength = float(strength_str)
                     print("磁力の強さ:", strength)
-                    
+
                     # 強さがしきい値を超えたら音を鳴らす（オプション）
-                    if strength < 20000 or strength > 70000:
+                    if strength > 40000:
                         print("🔔 強い磁力を検知！音を鳴らします")
                         # Windows の場合：beep音
                         import winsound

@@ -3,7 +3,7 @@ import time
 import pygame  # pygameで音声を再生
 
 # --- MP3ファイルの絶対パスを指定 ---
-mp3_path = "C:/Users/kai23/mygit/xbp/project1/ahiru2.mp3"  # ←ご自身のMP3ファイルのパスに変更
+mp3_path = "C:/Users/kai23/mygit/xbp/project1/歓声　ゆうごくん.mp3"  # ←ご自身のMP3ファイルのパスに変更
 
 # pygameの初期化
 pygame.mixer.init()
@@ -27,19 +27,24 @@ try:
                 try:
                     strength_str = line.split("Strength:")[-1].strip()
                     strength = float(strength_str)
-                    print("磁力の強さ:", strength)
+                    print("strength:", strength)
 
                     # しきい値判定でMP3再生
-                    if strength < 20000 or strength > 70000:
-                        print("🔔 異常な磁力を検知！音を再生します")
+                    if strength < 32000 or strength > 37000:
+                        print("磁力の変化を検知、音を再生")
                         pygame.mixer.music.play()
 
-                        # 音が鳴り終わるまで待機（必要なら）
+                        # 音が鳴り終わるまで待機
                         while pygame.mixer.music.get_busy():
                             time.sleep(0.1)
 
+                        print("再生完了。プログラムを終了")
+                        break  # ← ここでループを終了
+
                 except ValueError:
                     pass
+
+    ser.close()
 
 except serial.SerialException as e:
     print("シリアル接続に失敗しました:", e)

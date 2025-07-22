@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デザイン経営論 プロトタイピング</title>
+    <style>
+        /* --- 全体のスタイル --- */
+        body {
+            font-family: 'Helvetica Neue', 'Arial', 'Hiragino Sans', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* --- ヘッダー --- */
+        header {
+            background-color: #005a9c;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        /* --- 各セクションのスタイル --- */
+        section {
+            background-color: #fff;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #005a9c;
+            border-bottom: 2px solid #005a9c;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        /* --- 検索フォーム --- */
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-form input[type="text"] {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-form button {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .search-form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- 検索結果（本リスト） --- */
+        .book-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .book-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .book-card img {
+            max-width: 150px;
+            height: auto;
+            margin: 0 auto 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .book-card h3 {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .book-card .author {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-card .status {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .status.available {
+            color: #28a745;
+        }
+
+        .status.loaned {
+            color: #dc3545;
+        }
+
+        .book-card .action-button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: auto; /* カード下部にボタンを固定 */
+        }
+
+        .borrow-btn {
+            background-color: #28a745;
+        }
+        .borrow-btn:hover {
+            background-color: #218838;
+        }
+
+        .reserve-btn {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .reserve-btn:hover {
+            background-color: #e0a800;
+        }
+
+        /* --- 配送手続きフォーム --- */
+        .delivery-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .delivery-form input[type="text"],
+        .delivery-form textarea {
+            width: calc(100% - 24px); /* paddingを考慮 */
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .selected-book-info {
+            background-color: #e9ecef;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .confirm-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #005a9c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .confirm-btn:hover {
+            background-color: #004170;
+        }
+
+        /* --- フッター --- */
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>オンライン図書館サービス(仮)</h1>
+    </header>
+
+    <div class="container">
+
+        <section id="search-section">
+            <h2>本を検索する</h2>
+            <form class="search-form" onsubmit="return false;">
+                <input type="text" placeholder="デザイン経営論">
+                <button type="submit">検索</button>
+            </form>
+        </section>
+
+        <section id="results-section">
+            <h2>検索結果</h2>
+            <div class="book-list">
+                <div class="book-card">
+                    <img src="https://placehold.jp/150x220.png?text=本の表紙A" alt="新しいHTMLの教科書">
+                    <h3>デザイン経営の極意</h3>
+                    <p class="author">道用大介</p>
+                    <p class="status available">貸出可能</p>
+                    <button class="action-button borrow-btn">この本を借りる</button>
+                </div>
+
+                <div class="book-card">
+                    <img src="https://placehold.jp/150x220.png?text=本の表紙B" alt="CSSデザインの極意">
+                    <h3>デザイン経営概論</h3>
+                    <p class="author">山崎友彰</p>
+                    <p class="status loaned">貸出中</p>
+                    <button class="action-button reserve-btn">予約する</button>
+                </div>
+
+                <div class="book-card">
+                    <img src="https://placehold.jp/150x220.png?text=本の表紙C" alt="JavaScriptマスター">
+                    <h3>デザイン経営大全</h3>
+                    <p class="author">泉水英計</p>
+                    <p class="status available">貸出可能</p>
+                    <button class="action-button borrow-btn">この本を借りる</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="delivery-section">
+            <h2>配送手続き</h2>
+            
+            <div class="delivery-form">
+                <label for="selected-book">選択した本</label>
+                <div id="selected-book" class="selected-book-info">
+                    <strong>デザイン経営の極意</strong> (道用大介)
+                </div>
+
+                <label for="user-name">氏名</label>
+                <input type="text" id="user-name" value="氏名を入力" readonly>
+
+                <label for="address">配送先住所</label>
+                <textarea id="address" rows="3" readonly>住所を入力</textarea>
+                
+
+                <button type="submit" class="confirm-btn">確認へ進む</button>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
