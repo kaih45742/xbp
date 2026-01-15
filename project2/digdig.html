@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>フリマアプリ風デモ（背景色変更版）</title>
+    <title>フリマアプリ風デモ（3列表示版）</title>
     <style>
         /* --- リセットCSS & 基本設定 --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            
-            /* 背景色を変更しました */
-            background-color: #fff6ee; 
-            
+            background-color: #fff6ee; /* 背景色 */
             padding-bottom: 80px;
             color: #333;
         }
@@ -82,28 +79,31 @@
             .category-logo { display: none; }
         }
 
-        /* --- 商品一覧エリア --- */
+        /* --- 商品一覧エリア（ここを変更しました） --- */
         .item-container {
-            padding: 10px;
+            padding: 5px; /* 全体の余白を少し小さく */
             max-width: 800px;
             margin: 0 auto;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px; 
+            /* 変更: 2列(2)から3列(3)に変更 */
+            grid-template-columns: repeat(3, 1fr);
+            /* 変更: 3列だと窮屈なので隙間を少し狭くしました */
+            gap: 3px; 
         }
+        
+        /* PCなど画面が広いときは自動調整 */
         @media (min-width: 600px) {
-            .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
         }
 
         /* --- 商品カード --- */
         .item-card {
             background-color: #fff;
-            border-radius: 4px;
+            border-radius: 0; /* 3列だと角丸なしの方がスッキリ見えることが多いですが、好みで4pxに戻せます */
             overflow: hidden;
             position: relative;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: opacity 0.2s;
             display: flex; 
@@ -129,10 +129,10 @@
             left: 0;
             background-color: rgba(0, 0, 0, 0.6);
             color: #fff;
-            padding: 4px 8px;
+            padding: 2px 6px; /* 文字サイズに合わせて少し小さく */
             border-top-right-radius: 4px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 12px; /* 3列だと画像が小さいので文字も少し小さく */
             z-index: 5;
         }
 
@@ -145,17 +145,18 @@
             width: 0;
             height: 0;
             border-style: solid;
-            border-width: 60px 60px 0 0;
+            /* 三角形も少し小さく調整 */
+            border-width: 40px 40px 0 0;
             border-color: #ea352d transparent transparent transparent;
             z-index: 10;
         }
         .sold-out .sold-text {
             position: absolute;
-            top: 10px;
-            left: 5px;
+            top: 5px;
+            left: 2px;
             color: white;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 10px;
             transform: rotate(-45deg);
             z-index: 11;
         }
@@ -252,24 +253,23 @@
 
     <script>
         const grid = document.getElementById('itemGrid');
-        const itemCount = 28; // 商品数
+        const itemCount = 28; 
 
         for (let i = 0; i < itemCount; i++) {
-            // 1. 価格を4000〜15000円の間でランダム生成
+            // 1. 価格を4000〜15000円
             const minPrice = 4000;
             const maxPrice = 9999;
             const price = Math.floor(Math.random() * (maxPrice - minPrice + 1)) + minPrice;
             const formattedPrice = "¥" + price.toLocaleString();
 
-            // 2. 連番の画像ファイル名 (image_1.png から image_40.png)
+            // 2. 画像ファイル名 (image_1.png ~ image_40.png)
             const imgUrl = `image_${i + 1}.png`;
 
-            // 3. たまに売り切れ(SOLD)にする (20%の確率)
+            // 3. SOLD OUT (20%)
             const isSold = Math.random() < 0.0;
             const soldClass = isSold ? "sold-out" : "";
             const soldLabel = isSold ? '<span class="sold-text">SOLD</span>' : "";
 
-            // HTMLを生成して追加
             const itemHTML = `
                 <div class="item-card">
                     <div class="image-box ${soldClass}">
