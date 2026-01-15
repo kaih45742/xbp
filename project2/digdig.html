@@ -252,12 +252,12 @@
 
     <script>
         const grid = document.getElementById('itemGrid');
-        const itemCount = 40; // 商品数
+        const itemCount = 28; // 商品数
 
         for (let i = 0; i < itemCount; i++) {
             // 1. 価格を4000〜15000円の間でランダム生成
             const minPrice = 4000;
-            const maxPrice = 15000;
+            const maxPrice = 9999;
             const price = Math.floor(Math.random() * (maxPrice - minPrice + 1)) + minPrice;
             const formattedPrice = "¥" + price.toLocaleString();
 
@@ -265,7 +265,7 @@
             const imgUrl = `image_${i + 1}.png`;
 
             // 3. たまに売り切れ(SOLD)にする (20%の確率)
-            const isSold = Math.random() < 0.2;
+            const isSold = Math.random() < 0.0;
             const soldClass = isSold ? "sold-out" : "";
             const soldLabel = isSold ? '<span class="sold-text">SOLD</span>' : "";
 
