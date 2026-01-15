@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>フリマアプリ風デモ（背景色変更版）</title>
+    <style>
+        /* --- リセットCSS & 基本設定 --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            
+            /* 背景色を変更しました */
+            background-color: #fff6ee; 
+            
+            padding-bottom: 80px;
+            color: #333;
+        }
+
+        /* --- ヘッダー --- */
+        header {
+            background-color: #fff;
+            padding: 10px 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .search-bar {
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            padding: 10px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* --- カテゴリタブ --- */
+        .category-tabs {
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tabs-scroll {
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+        .tabs-scroll::-webkit-scrollbar { display: none; }
+
+        .tab {
+            display: inline-block;
+            padding: 5px 15px;
+            font-weight: bold;
+            color: #888;
+            text-decoration: none;
+        }
+        .tab.active {
+            color: #ea352d;
+            border-bottom: 2px solid #ea352d;
+        }
+
+        /* --- カテゴリ右端のロゴ --- */
+        .category-logo {
+            background-image: url('image_0.png'); 
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 80px;
+            height: 30px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .category-logo { display: none; }
+        }
+
+        /* --- 商品一覧エリア --- */
+        .item-container {
+            padding: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px; 
+        }
+        @media (min-width: 600px) {
+            .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+        }
+
+        /* --- 商品カード --- */
+        .item-card {
+            background-color: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: opacity 0.2s;
+            display: flex; 
+            flex-direction: column;
+        }
+        .item-card:hover { opacity: 0.9; }
+
+        .image-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #eee;
+        }
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .price-tag {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 4px 8px;
+            border-top-right-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 5;
+        }
+
+        /* SOLD OUT 装飾 */
+        .sold-out::after {
+            content: "SOLD";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 60px 60px 0 0;
+            border-color: #ea352d transparent transparent transparent;
+            z-index: 10;
+        }
+        .sold-out .sold-text {
+            position: absolute;
+            top: 10px;
+            left: 5px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            transform: rotate(-45deg);
+            z-index: 11;
+        }
+
+        /* --- マップボタン --- */
+        .fab-map {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 70px;
+            height: 70px;
+            background-color: #4285F4; 
+            border-radius: 50%;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 200;
+            font-weight: bold;
+            font-size: 12px;
+            border: none;
+            transition: transform 0.2s;
+        }
+        .fab-map:active { transform: scale(0.95); }
+        .fab-map span {
+            font-size: 24px;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        /* --- 下部ナビゲーション --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 100;
+        }
+        .nav-item {
+            text-align: center;
+            font-size: 10px;
+            color: #888;
+            cursor: pointer;
+        }
+        .nav-icon {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        .nav-item.active { color: #333; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="search-bar">🔍 ブランドやキーワードで検索</div>
+    </header>
+
+    <div class="category-tabs">
+        <div class="tabs-scroll">
+            <a href="#" class="tab active">すべて</a>
+            <a href="#" class="tab">トップス</a>
+            <a href="#" class="tab">ジャケット/アウター</a>
+            <a href="#" class="tab">パンツ</a>
+            <a href="#" class="tab">スカート</a>
+            <a href="#" class="tab">ドレス</a>
+            <a href="#" class="tab">アクセサリー</a>
+        </div>
+        <div class="category-logo"></div>
+    </div>
+
+    <div class="item-container">
+        <div class="grid" id="itemGrid"></div>
+    </div>
+
+    <button class="fab-map" onclick="alert('マップ画面へ')">
+        <span>🗺️</span>
+        マップ
+    </button>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active"><span class="nav-icon">🏠</span>ホーム</div>
+        <div class="nav-item"><span class="nav-icon">🔔</span>お知らせ</div>
+        <div class="nav-item"><span class="nav-icon">👤</span>マイページ</div>
+    </nav>
+
+    <script>
+        const grid = document.getElementById('itemGrid');
+        const itemCount = 40; // 商品数
+
+        for (let i = 0; i < itemCount; i++) {
+            // 1. 価格を4000〜15000円の間でランダム生成
+            const minPrice = 4000;
+            const maxPrice = 15000;
+            const price = Math.floor(Math.random() * (maxPrice - minPrice + 1)) + minPrice;
+            const formattedPrice = "¥" + price.toLocaleString();
+
+            // 2. 連番の画像ファイル名 (image_1.png から image_40.png)
+            const imgUrl = `image_${i + 1}.png`;
+
+            // 3. たまに売り切れ(SOLD)にする (20%の確率)
+            const isSold = Math.random() < 0.2;
+            const soldClass = isSold ? "sold-out" : "";
+            const soldLabel = isSold ? '<span class="sold-text">SOLD</span>' : "";
+
+            // HTMLを生成して追加
+            const itemHTML = `
+                <div class="item-card">
+                    <div class="image-box ${soldClass}">
+                        ${soldLabel}
+                        <img src="${imgUrl}" alt="商品画像">
+                        <div class="price-tag">${formattedPrice}</div>
+                    </div>
+                </div>
+            `;
+            grid.insertAdjacentHTML('beforeend', itemHTML);
+        }
+    </script>
+</body>
+</html>
